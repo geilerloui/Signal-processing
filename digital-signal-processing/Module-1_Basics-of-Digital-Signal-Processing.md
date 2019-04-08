@@ -154,7 +154,213 @@ Discrete-time signal: a sequence of **complex** numbers
 * one dimension (for now)
 * notation: $\mathbb{x}[n]$
 * Two-sided sequences: $\mathbb{x}:  \mathbb{Z} \rightarrow \mathbb{C}$
-* n is a-dimensional "time"
-* analysis: periodic measurement
-* Synthesis: stream of generated samples
+* n is a-dimensional "time" (we do not associate a dimension to it, we can think of it as "time")
+* **Analysis:** we create a periodic process where we take periodic measurements of a physical phenomenon (think of the flood of the Nile)
+* **Synthesis:** where we use say a computer program to generate data point that simulate a physical phenomenon that we want to reproduce 
+
+
+
+**Fundamental Signals:**
+
+---
+
+* The delta signal :
+
+<img src="images/im14.png" style="height:150px">
+
+* The unit step :
+
+<img src="images/im15.png" style="height:175px">
+
+* The exponential decay :
+
+<img src="images/im16.png" style="height:175px">
+
+* The sinusoid, $\theta$ is the initial phase
+
+<img src="images/im17.png" style="height:175px">
+
+
+
+**Division of the discrete-time signals into four classes :**
+
+---
+
+**1. Finite-length signals:** Not practical to develop the entire signal processing theory concentrating only on finite-length signals because the length gets in the way.
+
+* Sequence notation : $\mathbb{x}[n]​$, $n=0,1,...,N-1​$
+* Vector notation : $\mathbb{x} = [\mathbb{x}_0 ~ \mathbb{x}_1 ~ ... ~ \mathbb{x}_{N-1}]^T$
+* practical entities, good for numerical packages (e.g. numpy)
+
+
+
+**2. Infinite-length signals:**
+
+- Sequence notation $\mathbb{x}[n]​$, $n \in \mathbb{Z}​$
+- abstraction, good for theorems and results that do not depend on the length of the data
+
+
+
+**3. Periodic sequences:**
+
+* $N​$-periodic sequence: $\tilde{ \mathbb{x}}[n] = \tilde{ \mathbb{x}}[n+kN]​$, $n,k,N \in \mathbb{Z}​$
+* same information as finite-length of length $N​$
+* "natural" bridge between finite and infinite length
+
+
+
+**4. Finite support:**
+
+- Finite-support sequence: are infinite length sequences with only a finite number of nonzero samples (we will add the bar on the x symbol), the support is compact
+
+$$
+\bar{ \mathbb{x}}[n]=
+\left \{
+\begin{array}{c @{=} c}
+     \mathbb{x}[n] &  if ~0 \le n \le N \\
+    0 & otherwise \\
+\end{array}
+\right.
+~~~~ n \in \mathbb{Z}
+$$
+
+
+
+* same information as finite-length of length N
+* it constitutes another bridge between finite and infinite lengths signals. In a way we can always embed a finite-length sequence into an infinite-length sequences either by:
+  * periodizing the finite-length sequence, so turning that into a periodic signal
+  * by turning it into a finite-support signal by appending 0s before and after the interval
+
+
+
+**Elementary operators :**
+
+---
+
+* scaling: $\mathbb{y}[n] = \alpha \mathbb{x}[n]​$ 
+* sum: $\mathbb{y}[n] = \mathbb{x}[n] + \mathbb{z}[n]$ 
+* product: $\mathbb{y}[n] =\mathbb{x}[n] \cdot \mathbb{z}[n]$ 
+* shift by $k​$ (delay) : $\mathbb{y}[n] =\mathbb{x}[n-k]​$ 
+
+**We have two types of shift according to the embedding we choose:**
+
+* We embed the finite-length signal into a **finite-support sequence**
+
+In that case it's as if we were appending and prepending 0s outside of the range of the signal. As we shift we pull in 0s:
+
+ <img src="images/im18.png" style="height:175px">
+
+* Shift of a finite-length: **periodic extension**
+
+<img src="images/im19.png" style="height:175px">
+
+**Energy and power :**
+
+---
+
+Energy:
+$$
+E_{ \mathbb{x}} = \sum_{n=- \infty}^{+ \infty} | \mathbb{x}[n]|^2
+$$
+Power : it is the rate of product of energy for a sequence
+$$
+P_{\mathbb{x}} = \underset{N \rightarrow \infty}{lim} \frac{1}{2N+1} \sum_{n=-N}^{N} | \mathbb{x}[n]|^2
+$$
+For example, periodic sequences have infinite energy because we are summing the values in one period an infinite number of times. But their power, is equal to the:
+$$
+E_{\mathbb{x}} = \infty \\
+P_{\mathbb{x}}= \frac{1}{N} \sum_{n=0}^{N-1} | \tilde{\mathbb{x}}[n]|^2
+$$
+
+## 1.3 Basic signal processing
+
+#### 1.3.1 How your PC plays discrete-time sounds
+
+We will see how to convert from Discrete time to the Physical world:
+
+* **Discrete time:**
+  * $n$: no physical dimension (just a counter)
+  * periodicity: how many samples before pattern repeats
+* **Physical world:**
+  * periodicity: how many seconds before pattern repeats
+  * frequency measured in Hz ($s^{-1}$)
+
+
+
+The PC bridges this gap via a sound card, a device that takes a series of samples, and builds an electric signal that we can feed to a loud speaker. At the heart of this lies a system clock, with a period $T_s$ measured in second. $T_s$ is the time that we wait before we take a new sample from a discrete time sequence, and feed it in the sound card.
+
+<img src="images/im20.png" style="height:150px">
+
+* $T_s$ is the time in seconds between samples
+* periodicity of $M$ samples $\longrightarrow$ periodicty of $MT_s$ seconds
+* real world frequency:
+
+$$
+f = \frac{1}{MT_s} Hz
+$$
+
+We denote as well:
+
+* $F_s$ the number of samples per seconds
+* $T_s = 1 / F_s$
+
+Example:
+
+A typical value for $F_s = 4800, T_s \approx 20.8 \mu s$. If $M=110$ then $f \approx 440 Hz$
+
+
+
+#### 1.3.2 The Karplus-Strong algorithm
+
+We start by defining a Building block: **Arbitrary Delay** and other that I didn't put there (like the sum, multiplication, delay of 1 and so on)
+
+<img src="images/im21.png" style="height:175px">
+
+The 2-point Moving Average: take a "local" average, the representation of building block is:
+$$
+\mathbb{y}[n] = \frac{\mathbb{x}[n] + \mathbb{x}[n-1]}{2}
+$$
+<img src="images/im22.png" style="height:175px">
+
+Examples:
+
+let's apply it to a delta signal, as we can see nothing really happens before 0; 
+
+<img src="images/im23.png" style="height:175px">
+
+A recursive algorithm:
+
+<img src="images/im24.png" style="height:175px">
+
+Creating loops:
+
+to do
+
+
+
+
+
+**Introducing some realism :**
+
+-----
+
+* $M​$ controls frequency (pitch)
+* $\alpha$ controls envelope (decay)
+* $\bar{\mathbb{x}}[n]$ controls color (timbre)
+
+
+
+## 1.4 Complex exponentials
+
+
+
+
+
+#### 
+
+
+
+
+
+
 
