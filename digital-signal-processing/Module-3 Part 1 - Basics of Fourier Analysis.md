@@ -12,7 +12,7 @@
 
 ### 3.1.b The DFT as a change of basis
 
-We will start with a finite-length signals (i.e. vectors in $\mathbb{C}^N​$)  It turns out that in the space of finite-length signals, the Fourier analysis is just a simple change of basis. To illustrate this, let's see a temporal signal, where we do not notice anything special.
+We will start with a finite-length signals (i.e. vectors in $\mathbb{C}^N$)  It turns out that in the space of finite-length signals, the Fourier analysis is just a simple change of basis. To illustrate this, let's see a temporal signal, where we do not notice anything special.
 
 <img src="images/im45.png" style="height:150px">
 
@@ -159,19 +159,88 @@ A clearer way is to plot the magnitude and the phase of the fourier coefficients
 
 
 
+
+
+
+
 ### 3.2.c Interpreting a DFT plot
 
 As we've seen some examples, we can give some general guidelines on how to interpret a DFT plot.
 
+we can give some general guidelines on how to interpret a DFT plot. So first of all, you will have frequency coefficients from zero to big N minus one where N is the size of your vector space. 
 
+* The first N over two coefficients correspond to frequencies less than pi. So we're talking about **counter-clockwise movement** of the point on the complex plane.
 
+* Frequencies from $N/ 2$ to $N-1$, are frequencies  larger than $\pi$ and we interpret those as **clockwise rotations in the plane.**
+* Frequencies in this band, close to zero and close to N minus 1 are low frequencies, in the sense that they are indicate a slow rotation around a unit circle, either counterclockwise or clockwise here.
+* Whereas frequencies centered around N over 2 correspond to the fastest frequencies in the vector space, either clockwise or counterclockwise.
 
+<img src="images/im65.png" style="height:250px">
+
+**Example 1 - Slowest signal :**
+
+* So, if we go back to the examples that we saw before, if we take x of n, the units signal, so equal to one for all points, well this is the slowest possible signal in the sense that it never really changes, it remains constant for the whole duration of its life. And correspondingly, it's Fourier transform only contains the lowest frequency coefficient. It's not even a frequency in a sense, because k equal to zero is absence of movement. 
+
+<img src="images/im67.png" style="height:200px">
+
+**Example 2 - Fastest signal :**
+
+* It is the fastest signal in this period of time, it's DFT would only have one known zero coefficient exactly at the highest frequency point.
+
+<img src="images/im66.png" style="height:175px">
+
+**Energy distribution :**
+
+* Now if you recall Parseval's theorem from module 3.3, we know that the energy of a signal will not change if we change the underlying basis, so conservation of energy across domains. 
+
+<img src="images/im68.png" style="height:200px">
+
+Examples:
+
+* We can see that the energy is located only on the low frequencies
+
+<img src="images/im69.png" style="height:200px">
+
+* The energy is especially located on the low frequencies but also around the fast at the lower amplitude
+
+<img src="images/im70.png" style="height:200px">
+
+**DFT of real signals :**
+
+<img src="images/im71.png" style="height:225px">
+
+For real valued signal, the magnitude of **the DFT is completely specified by only the floor of N over 2 plus 1 coefficients.** So for N equal to 5, for instance, we only need three coefficients.
+
+<img src="images/im72.png" style="height:225px">
 
 
 
 ## 3.3 The DFT in Practice
 
-### 
+### 3.3.a A DFT analysis
+
+We take back our previous signal, and we're can now analyze it
+
+<img src="images/im45.png" style="height:150px">
+
+We take the DFT, we see the spikes arrive only in the real part, so we remember that the peaks are going to be a cosine
+
+<img src="images/im73.png" style="height:200px">
+
+We can write our signal as such with eta, the noise component
+
+<img src="images/im74.png" style="height:175px">
+
+If we plot the two graph we have : 
+
+* **a cosine **that oscillates 64 times in 1024 points 
+*  we have an **additional noise component** that doesn't really seem to have any structure.
+
+<img src="images/im75.png" style="height:200px">
+
+
+
+
 
 ## 3.4 The Short-Time Fourier transform
 
