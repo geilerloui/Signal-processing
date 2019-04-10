@@ -100,8 +100,6 @@ Maybe this is a good point to remind you that, although we talked about time dom
 
 
 
-
-
 **Example - DFT of** $\mathbb{x} [n] = 3 cos(2 \pi / 16 n), ~~\mathbb{x}[n] \in \mathbb{C}^{{64}}​$
 
 ---
@@ -137,11 +135,35 @@ We can plot it, and see that on the real part it will be 0 everywhere except in 
 
 <img src="images/im60.png" style="height:250px">
 
+**Example - DFT of** $\mathbb{x} [n] = 3 cos(2 \pi / 16 n + \pi/3), ~~\mathbb{x}[n] \in \mathbb{C}^{{64}}$
 
+----
+
+We compute with exact same method as before
+
+<img src="images/im61.png" style="height:150px">
+
+We can get those values:
+
+<img src="images/im62.png" style="height:100px">
+
+We can plot the Fourier transform
+
+<img src="images/im63.png" style="height:250px">
+
+A clearer way is to plot the magnitude and the phase of the fourier coefficients, this way of plotting the data  shows that we can use the Fourier transform to separate the amplitude of a sinusoide from its phase.
+
+<img src="images/im64.png" style="height:250px">
+
+7:27
 
 
 
 ### 3.2.c Interpreting a DFT plot
+
+As we've seen some examples, we can give some general guidelines on how to interpret a DFT plot.
+
+
 
 
 
