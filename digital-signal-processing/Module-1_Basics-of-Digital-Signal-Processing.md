@@ -322,23 +322,49 @@ $$
 $$
 <img src="images/im22.png" style="height:175px">
 
-Examples:
+**Examples:**
 
 let's apply it to a delta signal, as we can see nothing really happens before 0; 
 
 <img src="images/im23.png" style="height:175px">
 
-A recursive algorithm:
+**A recursive algorithm:**
 
 <img src="images/im24.png" style="height:175px">
 
-Creating loops:
+**Example :**
 
-to do
+A simple equation to describe compound interest:
 
+* Constant interest / borrowing rate of 5% per year
+* Interest accrues on Dec 31
+* Deposits/withdrawals during year $n$ :   $\mathbb{x}[n] $ 
+* Balance at year n
 
+$$
+\mathbb{y}[n] = 1.05 ~ \mathbb{y}[n-1] + \mathbb{x}[n]  
+$$
 
+If we draw it as a DSP (Digital Signal Processor) circuit we get:
 
+<img src="images/im76.png" style="height:175px">
+
+If we do the calculations :
+
+<img src="images/im77.png" style="height:175px">
+
+**Creating loops :**
+
+We will add a delay of $M$ which is equivalent to replace it by a cascade of three delayed blocks. So we can use three memory cells and we can use these structure to create loops. We will see how it works by using a delta sequence as the input and $\alpha = 1$ . And the initial condition that all the values are set to zero.
+
+* For $n = 0$ , we give a value to y(0) that goes to z^-1 for for the next n=1, n=2 we will have a zero
+* and then for $n=3$ the 1 will leave the memory cells and we will get a 1 again.
+
+<img src="images/im78.png" style="height:250px">
+
+Example:
+
+<img src="images/im79.png" style="height:200px">
 
 **Introducing some realism :**
 
@@ -349,6 +375,10 @@ to do
 * $\bar{\mathbb{x}}[n]$ controls color (timbre)
 
 
+
+**Karplus Strong algorithm :** This is actually the context in which it was invented by Carplus and Strong and they found out that the best way to initialize the algorithm, so the best way to fill the finite support of the input signal you see is random values compared to a sufficiently fast decay factor. So here we will pick alpha = 0.9. We will use 100 random values between -1 and 1 over the finite support of the input and run the algorithm to obtain a waveform that looks like this. Here you can see the decay factor because we're plotting the signal on a longer window.
+
+<img src="images/im80.png" style="height:200px">
 
 ## 1.4 Complex exponentials
 
